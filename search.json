@@ -1,23 +1,79 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ForeignAssistance dot gov emergency backup",
+    "section": "",
+    "text": "USAID’s ForeignAssistance.gov was taken offline on January 31, 2025. It returned on February 3, 2025, but it’s not clear how long it will be available.\nAs a backup, I’ve uploaded the entire ForeignAssistance.gov dataset to a Datasette website/API at https://foreignassistance-data.andrewheiss.com/. Everything as of December 19, 2024 is available there, both as a queryable SQL database and as downloadable CSV files.\nTo simplify things, I’ve also provided links for each individual dataset below."
+  },
+  {
+    "objectID": "index.html#u.s.-foreign-assistance",
+    "href": "index.html#u.s.-foreign-assistance",
+    "title": "ForeignAssistance dot gov emergency backup",
+    "section": "U.S. Foreign Assistance",
+    "text": "U.S. Foreign Assistance\n\nComplete Dataset\nThe complete ForeignAssistance.gov dataset.\n\n CSV\n API\n\n\n\nCountry Summary\nThese tables offer a summary of obligations and disbursements in current and constant dollars by country from 1946 to the most recent year.\n\n CSV (Right click the link and select “Save link as…”)\n API\n\n\n\nUSG Sector Summary\nThese tables offer a summary of obligations and disbursements in current and constant dollars by U.S. Government (USG) sector and country from 2001 to the most recent year.\n\n CSV (Right click the link and select “Save link as…”)\n API\n\n\n\nFunding Agency Summary\nThese tables offer a summary of obligations and disbursements in current and constant dollars by funding agency, funding account, and country from 2001 to the most recent year.\n\n CSV (Right click the link and select “Save link as…”)\n API\n\n\n\nBudget Dataset\nThe complete foreign aid budget dataset: President’s Budget Request, initial allocations, and final allocations\n\n CSV (Right click the link and select “Save link as…”)\n API\n\n\n\nOECD/DAC Sector Summary\nThese tables offer a summary of obligations and disbursements by OECD/DAC sector and sector category from 2001 to the most recent year.\n\n CSV (Right click the link and select “Save link as…”)\n API\n\n\n\nManaging Agency Summary\nThese tables offer a summary of obligations and disbursements in current and constant dollars by managing agency and country from 2001 to the most recent year.\n\n CSV (Right click the link and select “Save link as…”)\n API\n\n\n\nData Dictionary\nA table with information describing the contents and structure of the U.S. ForeignAssistance.gov data fields.\n\n PDF"
+  },
+  {
+    "objectID": "index.html#other-u.s.-government-international-flows",
+    "href": "index.html#other-u.s.-government-international-flows",
+    "title": "ForeignAssistance dot gov emergency backup",
+    "section": "Other U.S. Government International Flows",
+    "text": "Other U.S. Government International Flows\n\nU.S. International Development Finance Corporation Active Project Dataset\nThe Active Projects database reflects active DFC commitments as of the most recent completed calendar quarter. The database is updated approximately 45 days after the end of each quarter.\nNote: In addition to its programs categorized as other international flows, this dataset includes data on DFC’s Technical Assistance programs, which are also included in the Foreign Assistance data throughout this site.\n\n XSLX"
+  },
+  {
     "objectID": "live-example-dashboard.html",
     "href": "live-example-dashboard.html",
-    "title": "Live example dashboard",
+    "title": "2023 Obligations (example)",
     "section": "",
-    "text": "import {DatasetteClient} from \"@ambassadors/datasette-client\"\n\naid_db = new DatasetteClient(\n  \"https://foreignassistance-data.localhost/2025-02-03_foreign-assistance\"\n)"
+    "text": "import {DatasetteClient} from \"@ambassadors/datasette-client\"\n\naid_db = new DatasetteClient(\n  \"https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance\"\n)"
   },
   {
-    "objectID": "live-example-dashboard.html#row",
-    "href": "live-example-dashboard.html#row",
-    "title": "Live example dashboard",
-    "section": "Row",
-    "text": "Row\n\nColumn\n\nworld = FileAttachment(\"data/ne_110m_admin_0_countries.geojson\").json()\nworld_sans_penguins = world.features.filter(d =&gt; d.properties.ISO_A3 !== \"ATA\")\n\nrecipient_countries = await aid_db.sql`\n  SELECT \"Country Code\", \"Country Name\", \"Region Name\", SUM(\"constant_amount\") AS total_constant_amount\n  FROM \"./us_foreign_aid_country\"\n  WHERE \"Fiscal Year\" = '2023' AND \"Transaction Type Name\" = 'Obligations' AND \"Country Name\" NOT LIKE '%Region%' AND \"Country Name\" != \"World\"\n  GROUP BY \"Country Code\", \"Country Name\", \"Region Name\"\n  ORDER BY total_constant_amount DESC;\n`\n\ncountryTotals = new Map(recipient_countries.map(d =&gt; [d[\"Country Code\"], d.total_constant_amount]))\n\nPlot.plot({\n  projection: \"equal-earth\",\n  width,\n  marks: [\n    Plot.geo(world_sans_penguins, Plot.centroid({\n      fill: d =&gt; countryTotals.get(d.properties.ISO_A3),\n      tip: true,\n      channels: {\n        County: d =&gt; d.properties.ISO_A3\n      }\n    })),\n    Plot.geo(world_sans_penguins, {\n      stroke: \"white\",\n      strokeWidth: 0.25\n    })\n  ],\n  color: {\n    scheme: \"blues\",\n    unknown: \"#ddd\",\n    type: \"log\", \n    legend: true,\n    label: \"Total obligations\", \n  }\n})\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nColumn\nHey"
+    "objectID": "live-example-dashboard.html#map",
+    "href": "live-example-dashboard.html#map",
+    "title": "2023 Obligations (example)",
+    "section": "Map",
+    "text": "Map\nSELECT \"Country Code\", \"Country Name\", \"Region Name\", SUM(\"constant_amount\") AS total_constant_amount\n  FROM \"./us_foreign_aid_country\"\n  WHERE \"Fiscal Year\" = '2023' AND \"Transaction Type Name\" = 'Obligations' AND \"Country Name\" NOT LIKE '%Region%' AND \"Country Name\" != \"World\"\n  GROUP BY \"Country Code\", \"Country Name\", \"Region Name\"\n  ORDER BY total_constant_amount DESC;\n\nworld = FileAttachment(\"data/ne_110m_admin_0_countries.geojson\").json()\nworld_sans_penguins = world.features.filter(d =&gt; d.properties.ISO_A3 !== \"ATA\")\n\nrecipient_countries = await aid_db.sql`\n  SELECT \"Country Code\", \"Country Name\", \"Region Name\", SUM(\"constant_amount\") AS total_constant_amount\n  FROM \"./us_foreign_aid_country\"\n  WHERE \"Fiscal Year\" = '2023' AND \"Transaction Type Name\" = 'Obligations' AND \"Country Name\" NOT LIKE '%Region%' AND \"Country Name\" != \"World\"\n  GROUP BY \"Country Code\", \"Country Name\", \"Region Name\"\n  ORDER BY total_constant_amount DESC;\n`\n\ncountryTotals = new Map(recipient_countries.map(d =&gt; [d[\"Country Code\"], d.total_constant_amount]))\n\nPlot.plot({\n  projection: \"equal-earth\",\n  width,\n  marks: [\n    Plot.geo(world_sans_penguins, Plot.centroid({\n      fill: d =&gt; countryTotals.get(d.properties.ISO_A3),\n      tip: true,\n      channels: {\n        County: d =&gt; d.properties.ISO_A3\n      }\n    })),\n    Plot.geo(world_sans_penguins, {\n      stroke: \"white\",\n      strokeWidth: 0.25\n    })\n  ],\n  color: {\n    scheme: \"blues\",\n    unknown: \"#ddd\",\n    type: \"log\", \n    legend: true,\n    label: \"Total obligations\", \n  }\n})"
   },
   {
-    "objectID": "live-example-dashboard.html#row-1",
-    "href": "live-example-dashboard.html#row-1",
-    "title": "Live example dashboard",
-    "section": "Row",
-    "text": "Row\n\nus_sector = await aid_db.sql`\n  SELECT \"US Category Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_usg_sector\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"US Category Name\"\n  ORDER BY total DESC\n`\n\nInputs.table(us_sector)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndac_sector = await aid_db.sql`\n  SELECT \"International Category Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_dac_sector\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"International Category Name\"\n  ORDER BY total DESC\n`\n\nInputs.table(dac_sector)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmanaging_agencies = await aid_db.sql`\n  SELECT \"Managing Agency Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_implementing\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"Managing Agency Name\"\n  ORDER BY total DESC\n`\n\nInputs.table(managing_agencies)"
+    "objectID": "live-example-dashboard.html#aid-by-sector-us",
+    "href": "live-example-dashboard.html#aid-by-sector-us",
+    "title": "2023 Obligations (example)",
+    "section": "Aid by sector, US",
+    "text": "Aid by sector, US\nSELECT \"US Category Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_usg_sector\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"US Category Name\"\n  ORDER BY total DESC\n\nus_sector = await aid_db.sql`\n  SELECT \"US Category Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_usg_sector\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"US Category Name\"\n  ORDER BY total DESC\n`\n\nInputs.table(us_sector)"
+  },
+  {
+    "objectID": "live-example-dashboard.html#aid-by-sector-international",
+    "href": "live-example-dashboard.html#aid-by-sector-international",
+    "title": "2023 Obligations (example)",
+    "section": "Aid by sector, international",
+    "text": "Aid by sector, international\nSELECT \"International Category Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_dac_sector\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"International Category Name\"\n  ORDER BY total DESC\n\ndac_sector = await aid_db.sql`\n  SELECT \"International Category Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_dac_sector\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"International Category Name\"\n  ORDER BY total DESC\n`\n\nInputs.table(dac_sector)"
+  },
+  {
+    "objectID": "live-example-dashboard.html#aid-by-managing-agency",
+    "href": "live-example-dashboard.html#aid-by-managing-agency",
+    "title": "2023 Obligations (example)",
+    "section": "Aid by managing agency",
+    "text": "Aid by managing agency\nSELECT \"Managing Agency Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_implementing\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"Managing Agency Name\"\n  ORDER BY total DESC\n\nmanaging_agencies = await aid_db.sql`\n  SELECT \"Managing Agency Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_implementing\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"Managing Agency Name\"\n  ORDER BY total DESC\n`\n\nInputs.table(managing_agencies)"
+  },
+  {
+    "objectID": "original-site.html",
+    "href": "original-site.html",
+    "title": "Original site screenshots",
+    "section": "",
+    "text": "Original site dashboard"
+  },
+  {
+    "objectID": "original-site.html#original-dashboard",
+    "href": "original-site.html#original-dashboard",
+    "title": "Original site screenshots",
+    "section": "",
+    "text": "Original site dashboard"
+  },
+  {
+    "objectID": "original-site.html#data-download-page",
+    "href": "original-site.html#data-download-page",
+    "title": "Original site screenshots",
+    "section": "Data download page",
+    "text": "Data download page\n\n\n\nData download page"
   }
 ]
