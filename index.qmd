@@ -1,6 +1,83 @@
 ---
-title: "Thing"
-execute:
-  echo: false
-  output: false
+title: "ForeignAssistance dot gov emergency backup"
+toc: true
 ---
+
+USAID's [ForeignAssistance.gov](https://foreignassistance.gov/) was taken offline on January 31, 2025. It returned on February 3, 2025, but it's not clear how long it will be available.
+
+As a backup, I've uploaded the entire ForeignAssistance.gov dataset to a [Datasette](https://datasette.io/) website/API at <https://foreignassistance-data.andrewheiss.com/>. Everything as of December 19, 2024 is available there, both as a queryable SQL database and as downloadable CSV files.
+
+To simplify things, I've also provided links for each individual dataset below.
+
+::: {.callout-tip}
+#### Run your own!
+
+You can run your own Datasette API with a basic Docker Compose file. [See here for the complete source code](https://github.com/andrewheiss/foreign-assistance-data) for `foreignassistance-data.andrewheiss.com` and instructions for running your own copy.
+:::
+
+## U.S. Foreign Assistance
+
+### Complete Dataset
+
+The complete ForeignAssistance.gov dataset.
+
+- [{{< fa file-csv >}} CSV](https://www.dropbox.com/scl/fi/btzeaaq84wdpahb7c033g/data-raw_2025-02-03.zip?rlkey=atqpr633ayy4ya9p428vi6lon&dl=1)
+- [{{< fa cloud >}} API](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance)
+
+### Country Summary
+
+These tables offer a summary of obligations and disbursements in current and constant dollars by country from 1946 to the most recent year.
+
+- [{{< fa file-csv >}} CSV](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_country.csv) (**Right click the link and select "Save link as…"**)
+- [{{< fa cloud >}} API](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_country)
+
+### USG Sector Summary
+
+These tables offer a summary of obligations and disbursements in current and constant dollars by U.S. Government (USG) sector and country from 2001 to the most recent year.
+
+- [{{< fa file-csv >}} CSV](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_usg_sector.csv) (**Right click the link and select "Save link as…"**)
+- [{{< fa cloud >}} API](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_usg_sector)
+
+### Funding Agency Summary
+
+These tables offer a summary of obligations and disbursements in current and constant dollars by funding agency, funding account, and country from 2001 to the most recent year.
+
+- [{{< fa file-csv >}} CSV](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_funding.csv) (**Right click the link and select "Save link as…"**)
+- [{{< fa cloud >}} API](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_funding)
+
+### Budget Dataset
+
+The complete foreign aid budget dataset: President's Budget Request, initial allocations, and final allocations
+
+- [{{< fa file-csv >}} CSV](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_budget_complete.csv) (**Right click the link and select "Save link as…"**)
+- [{{< fa cloud >}} API](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_budget_complete)
+
+### OECD/DAC Sector Summary
+
+These tables offer a summary of obligations and disbursements by OECD/DAC sector and sector category from 2001 to the most recent year.
+
+- [{{< fa file-csv >}} CSV](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_dac_sector.csv) (**Right click the link and select "Save link as…"**)
+- [{{< fa cloud >}} API](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_dac_sector)
+
+### Managing Agency Summary
+
+These tables offer a summary of obligations and disbursements in current and constant dollars by managing agency and country from 2001 to the most recent year.
+
+- [{{< fa file-csv >}} CSV](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_implementing.csv) (**Right click the link and select "Save link as…"**)
+- [{{< fa cloud >}} API](https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_implementing)
+
+### Data Dictionary
+
+A table with information describing the contents and structure of the U.S. ForeignAssistance.gov data fields.
+
+- [{{< fa file-pdf >}} PDF](data/DataDictionary_ForeignAssistancegov.pdf)
+
+## Other U.S. Government International Flows
+
+### U.S. International Development Finance Corporation Active Project Dataset
+
+The Active Projects database reflects active DFC commitments as of the most recent completed calendar quarter. The database is updated approximately 45 days after the end of each quarter.
+
+*Note: In addition to its programs categorized as other international flows, this dataset includes data on DFC's Technical Assistance programs, which are also included in the Foreign Assistance data throughout this site.*
+
+- [{{< fa file-excel >}} XSLX](data/USDFC_ActiveProjects.xlsx)

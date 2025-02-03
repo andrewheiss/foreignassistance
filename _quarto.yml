@@ -5,13 +5,23 @@ project:
     port: 4444
 
 website:
-  title: "Foreign Assistance dot gov copy"
-  search: false
+  title: "ForeignAssistance dot gov emergency backup"
+
+  repo-url: "https://github.com/andrewheiss/foreignassistance"
+  repo-actions: [source, issue]
+
   navbar:
-    # background: "#CF4446"
+    pinned: true
+    search: false
+    
+    background: "#0a314d"
     left:
-      - text: "Live example dashboard"
-        file: live-example-dashboard.qmd
+      - live-example-dashboard.qmd
+      - original-site.qmd
+    right: 
+      - icon: github
+        aria-label: github
+        href: https://github.com/andrewheiss/foreignassistance
 
 format:
   html:

@@ -1,0 +1,12 @@
+---
+title: "Original site screenshots"
+toc: true
+---
+
+## Original dashboard
+
+![Original site dashboard](img/original-site-screenshot.png)
+
+## Data download page
+
+![Data download page](img/data-download-screenshot.png)
