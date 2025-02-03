@@ -1,0 +1,20 @@
+project:
+  type: website
+  output-dir: docs
+  preview:
+    port: 4444
+
+website:
+  title: "Foreign Assistance dot gov copy"
+  search: false
+  navbar:
+    # background: "#CF4446"
+    left:
+      - text: "Live example dashboard"
+        file: live-example-dashboard.qmd
+
+format:
+  html:
+    theme:
+      - zephyr
+      - custom.scss

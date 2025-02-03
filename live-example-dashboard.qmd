@@ -1,0 +1,109 @@
+---
+title: "Live example dashboard"
+execute:
+  echo: false
+  output: false
+format:
+  html: 
+    page-layout: full
+---
+
+```{ojs}
+import {DatasetteClient} from "@ambassadors/datasette-client"
+
+aid_db = new DatasetteClient(
+  "https://foreignassistance-data.localhost/2025-02-03_foreign-assistance"
+)
+```
+
+## Row
+
+### Column
+
+```{ojs}
+//| output: true
+
+// Choropleth map example: https://observablehq.com/@observablehq/plot-choropleth
+world = FileAttachment("data/ne_110m_admin_0_countries.geojson").json()
+world_sans_penguins = world.features.filter(d => d.properties.ISO_A3 !== "ATA")
+
+recipient_countries = await aid_db.sql`
+  SELECT "Country Code", "Country Name", "Region Name", SUM("constant_amount") AS total_constant_amount
+  FROM "./us_foreign_aid_country"
+  WHERE "Fiscal Year" = '2023' AND "Transaction Type Name" = 'Obligations' AND "Country Name" NOT LIKE '%Region%' AND "Country Name" != "World"
+  GROUP BY "Country Code", "Country Name", "Region Name"
+  ORDER BY total_constant_amount DESC;
+`
+
+countryTotals = new Map(recipient_countries.map(d => [d["Country Code"], d.total_constant_amount]))
+
+Plot.plot({
+  projection: "equal-earth",
+  width,
+  marks: [
+    Plot.geo(world_sans_penguins, Plot.centroid({
+      fill: d => countryTotals.get(d.properties.ISO_A3),
+      tip: true,
+      channels: {
+        County: d => d.properties.ISO_A3
+      }
+    })),
+    Plot.geo(world_sans_penguins, {
+      stroke: "white",
+      strokeWidth: 0.25
+    })
+  ],
+  color: {
+    scheme: "blues",
+    unknown: "#ddd",
+    type: "log", 
+    legend: true,
+    label: "Total obligations", 
+  }
+})
+```
+
+### Column
+
+Hey
+
+## Row
+
+```{ojs}
+//| output: true
+us_sector = await aid_db.sql`
+  SELECT "US Category Name", SUM("constant_amount") AS total
+  FROM "./us_foreign_aid_usg_sector"
+  WHERE "Fiscal Year" = 2023 AND "Transaction Type Name" = 'Obligations'
+  GROUP BY "US Category Name"
+  ORDER BY total DESC
+`
+
+Inputs.table(us_sector)
+```
+
+```{ojs}
+//| output: true
+dac_sector = await aid_db.sql`
+  SELECT "International Category Name", SUM("constant_amount") AS total
+  FROM "./us_foreign_aid_dac_sector"
+  WHERE "Fiscal Year" = 2023 AND "Transaction Type Name" = 'Obligations'
+  GROUP BY "International Category Name"
+  ORDER BY total DESC
+`
+
+Inputs.table(dac_sector)
+```
+
+```{ojs}
+//| output: true
+managing_agencies = await aid_db.sql`
+  SELECT "Managing Agency Name", SUM("constant_amount") AS total
+  FROM "./us_foreign_aid_implementing"
+  WHERE "Fiscal Year" = 2023 AND "Transaction Type Name" = 'Obligations'
+  GROUP BY "Managing Agency Name"
+  ORDER BY total DESC
+`
+
+Inputs.table(managing_agencies)
+```

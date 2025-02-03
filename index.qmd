@@ -1,0 +1,6 @@
+---
+title: "Thing"
+execute:
+  echo: false
+  output: false
+---
