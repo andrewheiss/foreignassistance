@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "live-example-dashboard.html",
+    "href": "live-example-dashboard.html",
+    "title": "Live example dashboard",
+    "section": "",
+    "text": "import {DatasetteClient} from \"@ambassadors/datasette-client\"\n\naid_db = new DatasetteClient(\n  \"https://foreignassistance-data.localhost/2025-02-03_foreign-assistance\"\n)"
+  },
+  {
+    "objectID": "live-example-dashboard.html#row",
+    "href": "live-example-dashboard.html#row",
+    "title": "Live example dashboard",
+    "section": "Row",
+    "text": "Row\n\nColumn\n\nworld = FileAttachment(\"data/ne_110m_admin_0_countries.geojson\").json()\nworld_sans_penguins = world.features.filter(d =&gt; d.properties.ISO_A3 !== \"ATA\")\n\nrecipient_countries = await aid_db.sql`\n  SELECT \"Country Code\", \"Country Name\", \"Region Name\", SUM(\"constant_amount\") AS total_constant_amount\n  FROM \"./us_foreign_aid_country\"\n  WHERE \"Fiscal Year\" = '2023' AND \"Transaction Type Name\" = 'Obligations' AND \"Country Name\" NOT LIKE '%Region%' AND \"Country Name\" != \"World\"\n  GROUP BY \"Country Code\", \"Country Name\", \"Region Name\"\n  ORDER BY total_constant_amount DESC;\n`\n\ncountryTotals = new Map(recipient_countries.map(d =&gt; [d[\"Country Code\"], d.total_constant_amount]))\n\nPlot.plot({\n  projection: \"equal-earth\",\n  width,\n  marks: [\n    Plot.geo(world_sans_penguins, Plot.centroid({\n      fill: d =&gt; countryTotals.get(d.properties.ISO_A3),\n      tip: true,\n      channels: {\n        County: d =&gt; d.properties.ISO_A3\n      }\n    })),\n    Plot.geo(world_sans_penguins, {\n      stroke: \"white\",\n      strokeWidth: 0.25\n    })\n  ],\n  color: {\n    scheme: \"blues\",\n    unknown: \"#ddd\",\n    type: \"log\", \n    legend: true,\n    label: \"Total obligations\", \n  }\n})\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nColumn\nHey"
+  },
+  {
+    "objectID": "live-example-dashboard.html#row-1",
+    "href": "live-example-dashboard.html#row-1",
+    "title": "Live example dashboard",
+    "section": "Row",
+    "text": "Row\n\nus_sector = await aid_db.sql`\n  SELECT \"US Category Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_usg_sector\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"US Category Name\"\n  ORDER BY total DESC\n`\n\nInputs.table(us_sector)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndac_sector = await aid_db.sql`\n  SELECT \"International Category Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_dac_sector\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"International Category Name\"\n  ORDER BY total DESC\n`\n\nInputs.table(dac_sector)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmanaging_agencies = await aid_db.sql`\n  SELECT \"Managing Agency Name\", SUM(\"constant_amount\") AS total\n  FROM \"./us_foreign_aid_implementing\"\n  WHERE \"Fiscal Year\" = 2023 AND \"Transaction Type Name\" = 'Obligations'\n  GROUP BY \"Managing Agency Name\"\n  ORDER BY total DESC\n`\n\nInputs.table(managing_agencies)"
+  }
+]
