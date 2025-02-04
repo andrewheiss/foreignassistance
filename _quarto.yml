@@ -4,6 +4,9 @@ project:
   preview:
     port: 4444
 
+resources: 
+  - CNAME
+
 website:
   title: "ForeignAssistance dot gov emergency backup"
 
@@ -13,7 +16,7 @@ website:
   navbar:
     pinned: true
     search: false
-    
+
     background: "#0a314d"
     left:
       - live-example-dashboard.qmd
