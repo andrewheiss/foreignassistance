@@ -21,6 +21,8 @@ website:
     left:
       - live-example-dashboard.qmd
       - original-site.qmd
+      - text: "Greenbook"
+        href: greenbook.qmd
     right: 
       - icon: github
         aria-label: github
