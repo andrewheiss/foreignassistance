@@ -21,6 +21,13 @@
     "text": "Other U.S. Government International Flows\n\nU.S. International Development Finance Corporation Active Project Dataset\nThe Active Projects database reflects active DFC commitments as of the most recent completed calendar quarter. The database is updated approximately 45 days after the end of each quarter.\nNote: In addition to its programs categorized as other international flows, this dataset includes data on DFC’s Technical Assistance programs, which are also included in the Foreign Assistance data throughout this site.\n\n XSLX"
   },
   {
+    "objectID": "greenbook.html",
+    "href": "greenbook.html",
+    "title": "U.S. Overseas Loans and Grants (Greenbook)",
+    "section": "",
+    "text": "Data provenance and details\n\n\n\nThis data used to be hosted at https://data.usaid.gov/d/7cnw-pw8v, but disappeared on January 31, 2025.\nAs of February 3, 2025, it still exists at Data.gov, but it is unclear how long it will be available there. I’ve made a copy and included it here.\nThe Excel file here includes data from 1946–2020 and was prepared on August 9, 2022. I’m not sure if there’s a more recent version—if you know of one, let me know!\n\n\n\n us_foreignaid_greenbook.xlsx\n\n\nData description\nThis dataset is used to produce the “U.S. Overseas Loans and Grants” publication, known as the “Greenbook”. The annual report to Congress on U.S foreign assistance flows is required by the Foreign Assistance Act, Section 634 and is the authoritative data set of U.S. foreign assistance. The annual update of the dataset contains data of United States Government (USG) foreign assistance since 1945. Foreign assistance is categorized as either economic assistance or military assistance. Foreign assistance is reported by recipient country and organized by geographic region, without distinction between developed and developing countries. Any country which has received cumulative economic or military assistance over $500,000 since 1945 and is considered an “Independent State” by the U.S. Department of State merits an individual country reporting."
+  },
+  {
     "objectID": "live-example-dashboard.html",
     "href": "live-example-dashboard.html",
     "title": "2023 Obligations (example)",

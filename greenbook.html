@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ForeignAssistance dot gov emergency backup</title>
+<title>U.S. Overseas Loans and Grants (Greenbook) – ForeignAssistance dot gov emergency backup</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -96,7 +96,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Original site screenshots</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./greenbook.html"> 
+    <a class="nav-link active" href="./greenbook.html" aria-current="page"> 
 <span class="menu-text">Greenbook</span></a>
   </li>  
 </ul>
@@ -117,35 +117,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#u.s.-foreign-assistance" id="toc-u.s.-foreign-assistance" class="nav-link active" data-scroll-target="#u.s.-foreign-assistance">U.S. Foreign Assistance</a>
-  <ul class="collapse">
-  <li><a href="#complete-dataset" id="toc-complete-dataset" class="nav-link" data-scroll-target="#complete-dataset">Complete Dataset</a></li>
-  <li><a href="#country-summary" id="toc-country-summary" class="nav-link" data-scroll-target="#country-summary">Country Summary</a></li>
-  <li><a href="#usg-sector-summary" id="toc-usg-sector-summary" class="nav-link" data-scroll-target="#usg-sector-summary">USG Sector Summary</a></li>
-  <li><a href="#funding-agency-summary" id="toc-funding-agency-summary" class="nav-link" data-scroll-target="#funding-agency-summary">Funding Agency Summary</a></li>
-  <li><a href="#budget-dataset" id="toc-budget-dataset" class="nav-link" data-scroll-target="#budget-dataset">Budget Dataset</a></li>
-  <li><a href="#oecddac-sector-summary" id="toc-oecddac-sector-summary" class="nav-link" data-scroll-target="#oecddac-sector-summary">OECD/DAC Sector Summary</a></li>
-  <li><a href="#managing-agency-summary" id="toc-managing-agency-summary" class="nav-link" data-scroll-target="#managing-agency-summary">Managing Agency Summary</a></li>
-  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary">Data Dictionary</a></li>
-  </ul></li>
-  <li><a href="#other-u.s.-government-international-flows" id="toc-other-u.s.-government-international-flows" class="nav-link" data-scroll-target="#other-u.s.-government-international-flows">Other U.S. Government International Flows</a>
-  <ul class="collapse">
-  <li><a href="#u.s.-international-development-finance-corporation-active-project-dataset" id="toc-u.s.-international-development-finance-corporation-active-project-dataset" class="nav-link" data-scroll-target="#u.s.-international-development-finance-corporation-active-project-dataset">U.S. International Development Finance Corporation Active Project Dataset</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/andrewheiss/foreignassistance/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/andrewheiss/foreignassistance/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ForeignAssistance dot gov emergency backup</h1>
+<h1 class="title">U.S. Overseas Loans and Grants (Greenbook)</h1>
 </div>
 
 
@@ -162,100 +140,29 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>USAID’s <a href="https://foreignassistance.gov/">ForeignAssistance.gov</a> was taken offline on January 31, 2025. It returned on February 3, 2025, but it’s not clear how long it will be available.</p>
-<p>As a backup, I’ve uploaded the entire ForeignAssistance.gov dataset to a <a href="https://datasette.io/">Datasette</a> website/API at <a href="https://foreignassistance-data.andrewheiss.com/" class="uri">https://foreignassistance-data.andrewheiss.com/</a>. Everything as of December 19, 2024 is available there, both as a queryable SQL database and as downloadable CSV files.</p>
-<p>To simplify things, I’ve also provided links for each individual dataset below.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Run your own!
+Data provenance and details
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You can run your own Datasette API with a basic Docker Compose file. <a href="https://github.com/andrewheiss/foreign-assistance-data">See here for the complete source code</a> for <code>foreignassistance-data.andrewheiss.com</code> and instructions for running your own copy.</p>
+<p>This data used to be hosted at <a href="https://data.usaid.gov/d/7cnw-pw8v" class="uri">https://data.usaid.gov/d/7cnw-pw8v</a>, but disappeared on January 31, 2025.</p>
+<p>As of February 3, 2025, <a href="https://catalog.data.gov/dataset/u-s-overseas-loans-and-grants-greenbook-data">it still exists at Data.gov</a>, but it is unclear how long it will be available there. I’ve made a copy and included it here.</p>
+<p>The Excel file here includes data from 1946–2020 and was prepared on August 9, 2022. I’m not sure if there’s a more recent version—if you know of one, let me know!</p>
 </div>
 </div>
-<section id="u.s.-foreign-assistance" class="level2">
-<h2 class="anchored" data-anchor-id="u.s.-foreign-assistance">U.S. Foreign Assistance</h2>
-<section id="complete-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="complete-dataset">Complete Dataset</h3>
-<p>The complete ForeignAssistance.gov dataset.</p>
 <ul>
-<li><a href="https://www.dropbox.com/scl/fi/btzeaaq84wdpahb7c033g/data-raw_2025-02-03.zip?rlkey=atqpr633ayy4ya9p428vi6lon&amp;dl=1"><i class="fa-solid fa-file-csv" aria-label="file-csv"></i> CSV</a></li>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance"><i class="fa-solid fa-cloud" aria-label="cloud"></i> API</a></li>
+<li><a href="data/us_foreignaid_greenbook.xlsx"><i class="fa-solid fa-file-excel" aria-label="file-excel"></i> <code>us_foreignaid_greenbook.xlsx</code></a></li>
 </ul>
-</section>
-<section id="country-summary" class="level3">
-<h3 class="anchored" data-anchor-id="country-summary">Country Summary</h3>
-<p>These tables offer a summary of obligations and disbursements in current and constant dollars by country from 1946 to the most recent year.</p>
-<ul>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_country.csv"><i class="fa-solid fa-file-csv" aria-label="file-csv"></i> CSV</a> (<strong>Right click the link and select “Save link as…”</strong>)</li>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_country"><i class="fa-solid fa-cloud" aria-label="cloud"></i> API</a></li>
-</ul>
-</section>
-<section id="usg-sector-summary" class="level3">
-<h3 class="anchored" data-anchor-id="usg-sector-summary">USG Sector Summary</h3>
-<p>These tables offer a summary of obligations and disbursements in current and constant dollars by U.S. Government (USG) sector and country from 2001 to the most recent year.</p>
-<ul>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_usg_sector.csv"><i class="fa-solid fa-file-csv" aria-label="file-csv"></i> CSV</a> (<strong>Right click the link and select “Save link as…”</strong>)</li>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_usg_sector"><i class="fa-solid fa-cloud" aria-label="cloud"></i> API</a></li>
-</ul>
-</section>
-<section id="funding-agency-summary" class="level3">
-<h3 class="anchored" data-anchor-id="funding-agency-summary">Funding Agency Summary</h3>
-<p>These tables offer a summary of obligations and disbursements in current and constant dollars by funding agency, funding account, and country from 2001 to the most recent year.</p>
-<ul>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_funding.csv"><i class="fa-solid fa-file-csv" aria-label="file-csv"></i> CSV</a> (<strong>Right click the link and select “Save link as…”</strong>)</li>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_funding"><i class="fa-solid fa-cloud" aria-label="cloud"></i> API</a></li>
-</ul>
-</section>
-<section id="budget-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="budget-dataset">Budget Dataset</h3>
-<p>The complete foreign aid budget dataset: President’s Budget Request, initial allocations, and final allocations</p>
-<ul>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_budget_complete.csv"><i class="fa-solid fa-file-csv" aria-label="file-csv"></i> CSV</a> (<strong>Right click the link and select “Save link as…”</strong>)</li>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_budget_complete"><i class="fa-solid fa-cloud" aria-label="cloud"></i> API</a></li>
-</ul>
-</section>
-<section id="oecddac-sector-summary" class="level3">
-<h3 class="anchored" data-anchor-id="oecddac-sector-summary">OECD/DAC Sector Summary</h3>
-<p>These tables offer a summary of obligations and disbursements by OECD/DAC sector and sector category from 2001 to the most recent year.</p>
-<ul>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_dac_sector.csv"><i class="fa-solid fa-file-csv" aria-label="file-csv"></i> CSV</a> (<strong>Right click the link and select “Save link as…”</strong>)</li>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_dac_sector"><i class="fa-solid fa-cloud" aria-label="cloud"></i> API</a></li>
-</ul>
-</section>
-<section id="managing-agency-summary" class="level3">
-<h3 class="anchored" data-anchor-id="managing-agency-summary">Managing Agency Summary</h3>
-<p>These tables offer a summary of obligations and disbursements in current and constant dollars by managing agency and country from 2001 to the most recent year.</p>
-<ul>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_implementing.csv"><i class="fa-solid fa-file-csv" aria-label="file-csv"></i> CSV</a> (<strong>Right click the link and select “Save link as…”</strong>)</li>
-<li><a href="https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance/~2E~2Fus_foreign_aid_implementing"><i class="fa-solid fa-cloud" aria-label="cloud"></i> API</a></li>
-</ul>
-</section>
-<section id="data-dictionary" class="level3">
-<h3 class="anchored" data-anchor-id="data-dictionary">Data Dictionary</h3>
-<p>A table with information describing the contents and structure of the U.S. ForeignAssistance.gov data fields.</p>
-<ul>
-<li><a href="data/DataDictionary_ForeignAssistancegov.pdf"><i class="fa-solid fa-file-pdf" aria-label="file-pdf"></i> PDF</a></li>
-</ul>
-</section>
-</section>
-<section id="other-u.s.-government-international-flows" class="level2">
-<h2 class="anchored" data-anchor-id="other-u.s.-government-international-flows">Other U.S. Government International Flows</h2>
-<section id="u.s.-international-development-finance-corporation-active-project-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="u.s.-international-development-finance-corporation-active-project-dataset">U.S. International Development Finance Corporation Active Project Dataset</h3>
-<p>The Active Projects database reflects active DFC commitments as of the most recent completed calendar quarter. The database is updated approximately 45 days after the end of each quarter.</p>
-<p><em>Note: In addition to its programs categorized as other international flows, this dataset includes data on DFC’s Technical Assistance programs, which are also included in the Foreign Assistance data throughout this site.</em></p>
-<ul>
-<li><a href="data/USDFC_ActiveProjects.xlsx"><i class="fa-solid fa-file-excel" aria-label="file-excel"></i> XSLX</a></li>
-</ul>
+<section id="data-description" class="level3">
+<h3 class="anchored" data-anchor-id="data-description">Data description</h3>
+<p>This dataset is used to produce the “U.S. Overseas Loans and Grants” publication, known as the “Greenbook”. The annual report to Congress on U.S foreign assistance flows is required by the Foreign Assistance Act, Section 634 and is the authoritative data set of U.S. foreign assistance. The annual update of the dataset contains data of United States Government (USG) foreign assistance since 1945. Foreign assistance is categorized as either economic assistance or military assistance. Foreign assistance is reported by recipient country and organized by geographic region, without distinction between developed and developing countries. Any country which has received cumulative economic or military assistance over $500,000 since 1945 and is considered an “Independent State” by the U.S. Department of State merits an individual country reporting.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -681,4 +588,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/andrewheiss/foreignassistance/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/andrewheiss/foreignassistance/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/andrewheiss/foreignassistance/blob/main/greenbook.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/andrewheiss/foreignassistance/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
