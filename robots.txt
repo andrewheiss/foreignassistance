@@ -1,1 +1,1 @@
-Sitemap: https://andrewheiss.github.io/foreignassistance/sitemap.xml
+Sitemap: https://foreignassistance.andrewheiss.com/sitemap.xml
