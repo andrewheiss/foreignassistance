@@ -1,4 +1,4 @@
-# foreignassistance.andrewheiss.com
+# ForeignAssistance dot gov emergency backup site
 
 USAID's [ForeignAssistance.gov](https://foreignassistance.gov/) was taken offline on January 31, 2025. It returned on February 3, 2025, but it's not clear how long it will be available.
 
