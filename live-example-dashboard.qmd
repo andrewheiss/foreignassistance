@@ -33,7 +33,7 @@ function formatDollar(value) {
 }
 
 function formatLabel(total, categoryName) {
-  const formattedTotal = d3.format("$.4s")(total).replace("G", "B");
+  const formattedTotal = d3.format(" $.4s")(total).replace("G", "B");
   return `${formattedTotal} - ${categoryName}`;
 }
 ```
@@ -143,7 +143,7 @@ Plot.plot({
       sort: { y: "x", reverse: true }
     }),
     Plot.text(us_sector, {
-      x: 200000000,
+      x: 0,
       y: "US Category Name",
       text: d => formatLabel(d.total, d["US Category Name"]),
       textAnchor: "start"
@@ -200,7 +200,7 @@ Plot.plot({
       sort: { y: "x", reverse: true }
     }),
     Plot.text(dac_sector, {
-      x: 200000000,
+      x: 0,
       y: "International Category Name",
       text: d => formatLabel(d.total, d["International Category Name"]),
       textAnchor: "start"
@@ -257,7 +257,7 @@ Plot.plot({
       sort: { y: "x", reverse: true }
     }),
     Plot.text(managing_agencies, {
-      x: 200000000,
+      x: 0,
       y: "Managing Agency Name",
       text: d => formatLabel(d.total, d["Managing Agency Name"]),
       textAnchor: "start"
