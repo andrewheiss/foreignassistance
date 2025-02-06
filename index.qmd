@@ -5,14 +5,14 @@ toc: true
 
 USAID's [ForeignAssistance.gov](https://foreignassistance.gov/) was taken offline on January 31, 2025. It returned on February 3, 2025, but it's not clear how long it will be available.
 
-As a backup, I've uploaded the entire ForeignAssistance.gov dataset to a [Datasette](https://datasette.io/) website/API at <https://foreignassistance-data.andrewheiss.com/>. Everything as of December 19, 2024 is available there, both as a queryable SQL database and as downloadable CSV files.
+As a backup, I've uploaded the entire ForeignAssistance.gov dataset to a website/database/API at <https://foreignassistance-data.andrewheiss.com/>. Everything as of December 19, 2024 is available there, both as a queryable SQL database and as downloadable CSV files.
 
 To simplify things, I've also provided links for each individual dataset below.
 
 ::: {.callout-tip}
 #### Run your own!
 
-You can run your own Datasette API with a basic Docker Compose file. [See here for the complete source code](https://github.com/andrewheiss/foreign-assistance-data) for `foreignassistance-data.andrewheiss.com` and instructions for running your own copy.
+You can run your own version of this [Datasette](https://datasette.io/) API with a basic Docker Compose file. [See here for the complete source code](https://github.com/andrewheiss/foreign-assistance-data) for `foreignassistance-data.andrewheiss.com` and instructions for running your own copy.
 :::
 
 ## U.S. Foreign Assistance
