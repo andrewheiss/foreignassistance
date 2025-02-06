@@ -10,29 +10,49 @@ format:
 ---
 
 ```{ojs}
+// Import extended projections from https://github.com/d3/d3-geo-projection
+// Use like d3_geo_projection.geoRobinson() 
+// See also https://observablehq.com/plot/features/projections
+d3_geo_projection = require("d3-geo-projection@4")
+
+// https://observablehq.com/@ambassadors/datasette-client
 import {DatasetteClient} from "@ambassadors/datasette-client"
 
 aid_db = new DatasetteClient(
   "https://foreignassistance-data.andrewheiss.com/2025-02-03_foreign-assistance"
 )
+
+function formatBillions(fs) {
+  return function(value) {
+    return d3.format(fs)(value).replace("G", "B");
+  };
+}
+
+function formatDollar(value) {
+  return value ? d3.format("$,d")(value) : "$0";
+}
+
+function formatLabel(total, categoryName) {
+  const formattedTotal = d3.format("$.4s")(total).replace("G", "B");
+  return `${formattedTotal} - ${categoryName}`;
+}
 ```
 
 ## Map
 
-```{.sql}
-SELECT "Country Code", "Country Name", "Region Name", SUM("constant_amount") AS total_constant_amount
-  FROM "./us_foreign_aid_country"
-  WHERE "Fiscal Year" = '2023' AND "Transaction Type Name" = 'Obligations' AND "Country Name" NOT LIKE '%Region%' AND "Country Name" != "World"
-  GROUP BY "Country Code", "Country Name", "Region Name"
-  ORDER BY total_constant_amount DESC;
-```
+::: {.panel-tabset}
+
+#### Plot
 
 ```{ojs}
 //| output: true
 
 // Choropleth map example: https://observablehq.com/@observablehq/plot-choropleth
 world = FileAttachment("data/ne_110m_admin_0_countries.geojson").json()
-world_sans_penguins = world.features.filter(d => d.properties.ISO_A3 !== "ATA")
+world_sans_penguins = ({
+    type: "FeatureCollection",
+    features: world.features.filter(d => d.properties.iso_a3 !== "ATA")
+})
 
 recipient_countries = await aid_db.sql`
   SELECT "Country Code", "Country Name", "Region Name", SUM("constant_amount") AS total_constant_amount
@@ -44,20 +64,31 @@ recipient_countries = await aid_db.sql`
 
 countryTotals = new Map(recipient_countries.map(d => [d["Country Code"], d.total_constant_amount]))
 
+// Robinson is 1.97:1 for the whole world, but without Antarctica that needs to 
+// be adjusted a bit
+width = 1000
+height = Math.round(width / 2.3)
+
 Plot.plot({
-  projection: "equal-earth",
+  projection: d3_geo_projection.geoRobinson().fitSize([width, height], world_sans_penguins),
   width,
+  height,
   marks: [
     Plot.geo(world_sans_penguins, Plot.centroid({
-      fill: d => countryTotals.get(d.properties.ISO_A3),
-      tip: true,
+      fill: d => countryTotals.get(d.properties.iso_a3),
       channels: {
-        County: d => d.properties.ISO_A3
+        Country: d => d.properties.name
+      },
+      tip: {
+        format: {
+          Country: true,
+          fill: d => formatDollar(d)
+        }
       }
     })),
     Plot.geo(world_sans_penguins, {
-      stroke: "white",
-      strokeWidth: 0.25
+      stroke: "black",
+      strokeWidth: 0.15
     })
   ],
   color: {
@@ -65,12 +96,71 @@ Plot.plot({
     unknown: "#ddd",
     type: "log", 
     legend: true,
-    label: "Total obligations", 
+    label: "Total obligations",
+    tickFormat: formatBillions("$.2s")
   }
 })
 ```
 
+#### Query
+
+```{.sql}
+SELECT "Country Code", "Country Name", "Region Name", SUM("constant_amount") AS total_constant_amount
+  FROM "./us_foreign_aid_country"
+  WHERE "Fiscal Year" = '2023' AND "Transaction Type Name" = 'Obligations' AND "Country Name" NOT LIKE '%Region%' AND "Country Name" != "World"
+  GROUP BY "Country Code", "Country Name", "Region Name"
+  ORDER BY total_constant_amount DESC;
+```
+
+:::
+
+
 ## Aid by sector, US
+
+::: {.panel-tabset}
+
+#### Plot
+
+```{ojs}
+//| output: true
+
+us_sector = await aid_db.sql`
+  SELECT "US Category Name", SUM("constant_amount") AS total
+  FROM "./us_foreign_aid_usg_sector"
+  WHERE "Fiscal Year" = 2023 AND "Transaction Type Name" = 'Obligations'
+  GROUP BY "US Category Name"
+  ORDER BY total DESC
+`
+
+Plot.plot({
+  x: { tickFormat: formatBillions("$.2s") },
+  y: { axis: null },
+  marks: [
+    Plot.barX(us_sector, {
+      x: "total",
+      y: "US Category Name",
+      fill: "#E0EFF5",
+      sort: { y: "x", reverse: true }
+    }),
+    Plot.text(us_sector, {
+      x: 200000000,
+      y: "US Category Name",
+      text: d => formatLabel(d.total, d["US Category Name"]),
+      textAnchor: "start"
+    })
+  ]
+})
+```
+
+#### Table
+
+```{ojs}
+//| output: true
+
+Inputs.table(us_sector)
+```
+
+#### Query
 
 ```{.sql}
 SELECT "US Category Name", SUM("constant_amount") AS total
@@ -80,28 +170,14 @@ SELECT "US Category Name", SUM("constant_amount") AS total
   ORDER BY total DESC
 ```
 
-```{ojs}
-//| output: true
-us_sector = await aid_db.sql`
-  SELECT "US Category Name", SUM("constant_amount") AS total
-  FROM "./us_foreign_aid_usg_sector"
-  WHERE "Fiscal Year" = 2023 AND "Transaction Type Name" = 'Obligations'
-  GROUP BY "US Category Name"
-  ORDER BY total DESC
-`
+:::
 
-Inputs.table(us_sector)
-```
 
 ## Aid by sector, international
 
-```{.sql}
-SELECT "International Category Name", SUM("constant_amount") AS total
-  FROM "./us_foreign_aid_dac_sector"
-  WHERE "Fiscal Year" = 2023 AND "Transaction Type Name" = 'Obligations'
-  GROUP BY "International Category Name"
-  ORDER BY total DESC
-```
+::: {.panel-tabset}
+
+#### Plot
 
 ```{ojs}
 //| output: true
@@ -113,18 +189,52 @@ dac_sector = await aid_db.sql`
   ORDER BY total DESC
 `
 
+Plot.plot({
+  x: { tickFormat: formatBillions("$.2s") },
+  y: { axis: null },
+  marks: [
+    Plot.barX(dac_sector, {
+      x: "total",
+      y: "International Category Name",
+      fill: "#E0EFF5",
+      sort: { y: "x", reverse: true }
+    }),
+    Plot.text(dac_sector, {
+      x: 200000000,
+      y: "International Category Name",
+      text: d => formatLabel(d.total, d["International Category Name"]),
+      textAnchor: "start"
+    })
+  ]
+})
+```
+
+#### Table
+
+```{ojs}
+//| output: true
+
 Inputs.table(dac_sector)
 ```
 
-## Aid by managing agency
+#### Query
 
 ```{.sql}
-SELECT "Managing Agency Name", SUM("constant_amount") AS total
-  FROM "./us_foreign_aid_implementing"
+SELECT "International Category Name", SUM("constant_amount") AS total
+  FROM "./us_foreign_aid_dac_sector"
   WHERE "Fiscal Year" = 2023 AND "Transaction Type Name" = 'Obligations'
-  GROUP BY "Managing Agency Name"
+  GROUP BY "International Category Name"
   ORDER BY total DESC
 ```
+
+:::
+
+
+## Aid by managing agency
+
+::: {.panel-tabset}
+
+#### Plot
 
 ```{ojs}
 //| output: true
@@ -136,5 +246,42 @@ managing_agencies = await aid_db.sql`
   ORDER BY total DESC
 `
 
+Plot.plot({
+  x: { tickFormat: formatBillions("$.2s") },
+  y: { axis: null },
+  marks: [
+    Plot.barX(managing_agencies, {
+      x: "total",
+      y: "Managing Agency Name",
+      fill: "#E0EFF5",
+      sort: { y: "x", reverse: true }
+    }),
+    Plot.text(managing_agencies, {
+      x: 200000000,
+      y: "Managing Agency Name",
+      text: d => formatLabel(d.total, d["Managing Agency Name"]),
+      textAnchor: "start"
+    })
+  ]
+})
+```
+
+#### Table
+
+```{ojs}
+//| output: true
+
 Inputs.table(managing_agencies)
 ```
+
+#### Query
+
+```{.sql}
+SELECT "Managing Agency Name", SUM("constant_amount") AS total
+  FROM "./us_foreign_aid_implementing"
+  WHERE "Fiscal Year" = 2023 AND "Transaction Type Name" = 'Obligations'
+  GROUP BY "Managing Agency Name"
+  ORDER BY total DESC
+```
+
+:::
